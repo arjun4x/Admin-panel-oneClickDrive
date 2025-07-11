@@ -1,11 +1,11 @@
 import React from 'react';
 import { cookies } from 'next/headers';
 import UserName from './UserName';
-const Header = () => {
+const Header = async () => {
   // You can replace this with actual user data later
 
-    const cookie =  cookies().get('token');
-  const token: string | undefined = cookie?.value;
+ const cookie = (await cookies()).get('token');
+   const token: string | undefined = cookie?.value;
 
 
 

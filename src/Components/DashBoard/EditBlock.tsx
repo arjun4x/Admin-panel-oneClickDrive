@@ -3,7 +3,7 @@ import { dashBoardContext } from "./DashBoard";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { listing } from "@/types/DashBoardInterFace";
-import { updateList } from "@/app/api/putItem/route";
+import { updateList } from '@/lib/updateList/updateData';
 function EditBlock() {
   const { editList, showModal, setShowModal } =
     useContext(dashBoardContext);

@@ -6,8 +6,8 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 const DashBoardMain = async() => {
-const cookie =  cookies().get('token');
-const token: string | undefined = cookie?.value;
+const cookie = (await cookies()).get('token');
+  const token: string | undefined = cookie?.value;
    if (!token) 
 redirect('/');
 

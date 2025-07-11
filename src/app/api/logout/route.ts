@@ -1,10 +1,18 @@
-import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
-export async function GET() {
-  const cookieStore = cookies();
+export async function GET(request: Request) {
 
-  // Delete cookie by setting it with maxAge=0 or expires in the past
-  cookieStore.delete('token');
+  const { origin } = new URL(request.url);
 
-//   return NextResponse.redirect(new URL('/', 'http://localhost:3000'));
+  const response = NextResponse.redirect(`${origin}/`);
+
+  response.cookies.set('token', '', {
+    maxAge: 0,
+    path: '/', 
+    secure: process.env.NODE_ENV === 'production', 
+    httpOnly: true,
+    sameSite: 'lax',
+  });
+
+  return response;
 }

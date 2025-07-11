@@ -1,11 +1,12 @@
 import React,{useContext} from 'react'
 import { dashBoardContext } from './DashBoard';
 import { listing } from '@/types/DashBoardInterFace';
-import { updateList } from '@/app/api/putItem/route';
+import { updateList } from '@/lib/updateList/updateData';
+import NoResult from './NoResult';
 
 const DashBoardResultPage = () => {
 
-  const {currentIndex,showModal,setShowModal,setEditList,paginationData}=useContext(dashBoardContext);
+  const {currentIndex,showModal,setShowModal,setEditList,paginationData,setFilterValue}=useContext(dashBoardContext);
     const resultBind = paginationData ? paginationData[currentIndex] ?? [] : [];
 
     const handleModal = (list:listing) =>{
@@ -26,9 +27,12 @@ const handleStatusChange = async (status: 'Approved' | 'Rejected',list:listing) 
 };
 
 
-
+console.log(resultBind,'sdfsdfsdfs')
+debugger
 
   return (
+    <>
+          {resultBind.length != 0 ? 
 <div className="overflow-x-auto bg-white/30 dark:bg-gray-800/30 backdrop-blur-md border border-white/20 dark:border-gray-500/20 shadow-lg rounded-xl">
 
     <table className="w-full table-auto text-left">
@@ -43,9 +47,11 @@ const handleStatusChange = async (status: 'Approved' | 'Rejected',list:listing) 
         </tr>
       </thead>
 
+
        
         <tbody>      
-          {resultBind?.map((list,index)=>{
+            {
+          resultBind?.map((list,index)=>{
             // console.log(list,'list');
          return(
          <tr className="border-t" key={index}>
@@ -65,7 +71,8 @@ const handleStatusChange = async (status: 'Approved' | 'Rejected',list:listing) 
           </td>
          </tr>
             )      
-            })}
+            }) 
+   }
         {/* Add more rows as needed */}
       </tbody>
     
@@ -74,6 +81,14 @@ const handleStatusChange = async (status: 'Approved' | 'Rejected',list:listing) 
  
     </table>
   </div>
+  : 
+
+    <NoResult setFilterValue={setFilterValue}/>
+
+  
+}  
+    </>
+
   )
 }
 
