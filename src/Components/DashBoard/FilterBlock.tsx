@@ -36,7 +36,7 @@ function FilterBlock() {
           className="w-full p-2 rounded border dark:border-gray-600 dark:bg-gray-700 text-sm md:text-base"
             onChange={(e) => HandleFilter(e.target.value)}
         >
-          <option value="All">All Statuses</option>
+          <option value="All">All Status</option>
           <option value="pending">Pending</option>
           <option value="approved">Approved</option>
           <option value="rejected">Rejected</option>

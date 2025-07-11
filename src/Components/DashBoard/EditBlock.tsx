@@ -22,21 +22,6 @@ function EditBlock() {
     status: "",
   });
 
-  useEffect(() => {
-    if (editList) {
-      setFormState({
-        title: editList.title,
-        location: editList.location,
-        pricePerDay: editList.pricePerDay,
-        status: editList.status,
-      });
-      setValue("title", editList?.title);
-      setValue("location", editList?.location);
-      setValue("pricePerDay", editList?.pricePerDay);
-      setValue("status", editList?.status);
-    }
-  }, [editList]);
-
   const {
     register,
     handleSubmit,
@@ -50,6 +35,21 @@ function EditBlock() {
       status: editList?.status || "",
     },
   });
+  useEffect(() => {
+    if (editList) {
+      setFormState({
+        title: editList.title,
+        location: editList.location,
+        pricePerDay: editList.pricePerDay,
+        status: editList.status,
+      });
+      setValue("title", editList?.title);
+      setValue("location", editList?.location);
+      setValue("pricePerDay", editList?.pricePerDay);
+      setValue("status", editList?.status);
+    }
+  }, [editList,setValue]);
+
 
   const onSubmit = async () => {
     if (editList) {
@@ -58,7 +58,7 @@ function EditBlock() {
       listVal.location = formState.location;
       listVal.pricePerDay = formState.pricePerDay;
       listVal.status = formState.status;
-
+debugger
       const response = await updateList(listVal);
       setShowModal(!showModal);
       window.location.reload();

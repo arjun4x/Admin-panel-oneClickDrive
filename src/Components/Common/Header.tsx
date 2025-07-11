@@ -6,7 +6,7 @@ const Header = () => {
 
     const cookie =  cookies().get('token');
   const token: string | undefined = cookie?.value;
-  
+
 
 
 
@@ -18,7 +18,7 @@ const Header = () => {
       >
         <div className="flex flex-1">
           <a href="#" className="text-xl font-bold text-gray-900 dark:text-white">
-            MyApp
+            Admin Panel
           </a>
         </div>
         <div className="flex items-center gap-6">

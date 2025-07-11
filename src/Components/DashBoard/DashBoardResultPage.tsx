@@ -15,11 +15,12 @@ const DashBoardResultPage = () => {
 
 
 
-const handleStatusChange = async (status: 'Approve' | 'Reject',list:listing) => {
+const handleStatusChange = async (status: 'Approved' | 'Rejected',list:listing) => {
   if (list) {
     const newEditVal: listing = structuredClone(list);
     newEditVal.status = status;
    const response = await updateList(newEditVal);
+   window.location.reload();
    console.log(response);
   }
 };
@@ -53,11 +54,11 @@ const handleStatusChange = async (status: 'Approve' | 'Reject',list:listing) => 
           <td className="p-3 text-sm md:text-base hidden sm:table-cell">{list.location}</td>
           <td className="p-3 text-sm md:text-base">{list?.pricePerDay}</td>
           <td className="p-3">
-            <span className="px-2 py-1 text-xs md:text-sm bg-yellow-100 text-yellow-700 rounded-full">Pending</span>
+            <span className="px-2 py-1 text-xs md:text-sm bg-yellow-100 text-yellow-700 rounded-full">{list.status}</span>
           </td>
           <td className="p-3 space-x-1 md:space-x-2">
-            <button className="text-green-600 hover:underline text-xs md:text-sm" onClick={()=>{handleStatusChange('Approve',list)}}>Approve</button>
-            <button className="text-red-600 hover:underline text-xs md:text-sm" onClick={()=>{handleStatusChange('Reject',list)}}>Reject</button>
+            <button className="text-green-600 hover:underline text-xs md:text-sm" onClick={()=>{handleStatusChange('Approved',list)}}>Approve</button>
+            <button className="text-red-600 hover:underline text-xs md:text-sm" onClick={()=>{handleStatusChange('Rejected',list)}}>Reject</button>
             <button className="text-blue-600 hover:underline text-xs md:text-sm" onClick={()=>{
               handleModal(list)
               }}>Edit</button>

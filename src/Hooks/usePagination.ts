@@ -17,14 +17,20 @@ function usePagination(result: listing[], filterValue: FilterValueType) {
       filteredResults = filteredResults.filter((item) => {
         console.log(item.status);
         debugger;
-        return (
-          item.status?.toLowerCase() === filterValue?.status?.toLowerCase()
-        );
+       const value :boolean =   item.status?.toLowerCase() == filterValue?.status?.toLowerCase()
+        debugger
+        return value;
+      return
+    //   if(item.status?.toLowerCase() == filterValue?.status?.toLowerCase()}
+    //    return true;
+    // }
+      
       });
     }
     console.log(filteredResults);
+    debugger
 
-    if (result.length <= 10) {
+    if (filteredResults.length <= 10) {
       setPaginationData([filteredResults]);
     } else {
       const lengthVal: number = filteredResults.length / 10;
