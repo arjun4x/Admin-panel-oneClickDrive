@@ -58,7 +58,7 @@ function EditBlock() {
       listVal.location = formState.location;
       listVal.pricePerDay = formState.pricePerDay;
       listVal.status = formState.status;
-debugger
+
       const response = await updateList(listVal);
       setShowModal(!showModal);
       window.location.reload();
