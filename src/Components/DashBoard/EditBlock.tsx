@@ -2,21 +2,24 @@ import React, { useContext, useEffect, useState } from "react";
 import { dashBoardContext } from "./DashBoard";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { listing } from "@/types/DashBoardInterFace";
+import { updateList } from "@/app/api/putItem/route";
 function EditBlock() {
-  const { editList, showModal } = useContext(dashBoardContext);
+  const { editList, showModal, setShowModal } =
+    useContext(dashBoardContext);
 
   type ListingFormData = {
     title: string;
     location: string;
     pricePerDay: number;
-    status: "Pending" | "Approved" | "Rejected";
+    status: string;
   };
 
   const [formState, setFormState] = useState({
     title: "",
     location: "",
     pricePerDay: 0,
-    status: "Pending",
+    status: "",
   });
 
   useEffect(() => {
@@ -44,27 +47,25 @@ function EditBlock() {
       title: editList?.title || "",
       location: editList?.location || "",
       pricePerDay: editList?.pricePerDay || 0,
-      status: editList?.status || "Pending",
+      status: editList?.status || "",
     },
   });
 
   const onSubmit = async () => {
-    // const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/list/${editList?.id}`, {
-    //   method: 'PUT',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(formState),
-    // });
+    if (editList) {
+      const listVal: listing = structuredClone(editList);
+      listVal.title = formState.title;
+      listVal.location = formState.location;
+      listVal.pricePerDay = formState.pricePerDay;
+      listVal.status = formState.status;
 
-    const response = await fetch(`api/ListUpdateWhole`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({formState}),
-    });
-
-    const result = await response.json();
-
-    console.log(result);
-    debugger;
+      const response = await updateList(listVal);
+      setShowModal(!showModal);
+      window.location.reload();
+      console.log(response);
+      // const result = await response.json();
+    }
+    // console.log(result);
   };
 
   const handleChange = (
@@ -75,6 +76,10 @@ function EditBlock() {
       ...prev,
       [name]: name == "pricePerDay" ? parseFloat(value ? value : "0") : value,
     }));
+  };
+
+  const handleCancel = () => {
+    setShowModal(!showModal);
   };
 
   return (
@@ -141,7 +146,6 @@ function EditBlock() {
             </span>
             <input
               type="number"
-              // name="pricePerDay"
               {...register("pricePerDay", {
                 required: "Price is required",
                 min: 1,
@@ -187,6 +191,7 @@ function EditBlock() {
             <button
               type="reset"
               className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
+              onClick={handleCancel}
             >
               Cancel
             </button>

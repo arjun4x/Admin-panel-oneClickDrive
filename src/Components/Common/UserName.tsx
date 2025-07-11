@@ -1,16 +1,37 @@
+'use client'
 import React from 'react'
+import { useRouter } from 'next/navigation';
 
-function UserName() {
+
+function UserName ({token}:{token:string|undefined}) {
+
+
+    const router = useRouter();
+
+const handleLogout = async() =>{
+
+  await fetch('/api/logout', { method: 'GET' });
+
+
+router.push('/')
+
+}
+
+  
+
+
   return (
     <>
+   { token &&
      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
-            Hello, {'username'}
-          </span>
-          <img
-            // src={avatarUrl}
-            // alt={`${username}'s avatar`}
-            className="h-8 w-8 rounded-full ring-2 ring-indigo-500"
-          />
+            Hello, {'Admin'}
+          </span>}
+             <button
+    className="text-sm font-medium text-red-600 hover:underline"
+    onClick={handleLogout}
+  >
+    Logout
+  </button>
     </>
   )
 }

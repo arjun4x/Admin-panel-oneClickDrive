@@ -63,7 +63,7 @@ function DashBoard({ result }: { result: FetchListResult }) {
             <PaginatedPage />
           </>
         ) : (
-          <NoResult setFilterValue={setFilterValue} />
+           <NoResult setFilterValue={setFilterValue} />
         )}
         <EditBlock />
       </div>

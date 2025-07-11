@@ -8,7 +8,7 @@ export interface listing {
   pricePerDay: number;
   location: string;
   imageUrl: string;
-  status: "Pending";
+  status: string;
 }
 
 export interface FetchSuccess {

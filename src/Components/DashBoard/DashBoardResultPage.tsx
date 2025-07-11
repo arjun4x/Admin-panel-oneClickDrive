@@ -1,6 +1,7 @@
 import React,{useContext} from 'react'
 import { dashBoardContext } from './DashBoard';
 import { listing } from '@/types/DashBoardInterFace';
+import { updateList } from '@/app/api/putItem/route';
 
 const DashBoardResultPage = () => {
 
@@ -11,6 +12,20 @@ const DashBoardResultPage = () => {
       setEditList(list);
       setShowModal(!showModal);
     }
+
+
+
+const handleStatusChange = async (status: 'Approve' | 'Reject',list:listing) => {
+  if (list) {
+    const newEditVal: listing = structuredClone(list);
+    newEditVal.status = status;
+   const response = await updateList(newEditVal);
+   console.log(response);
+  }
+};
+
+
+
 
   return (
 <div className="overflow-x-auto bg-white/30 dark:bg-gray-800/30 backdrop-blur-md border border-white/20 dark:border-gray-500/20 shadow-lg rounded-xl">
@@ -41,8 +56,8 @@ const DashBoardResultPage = () => {
             <span className="px-2 py-1 text-xs md:text-sm bg-yellow-100 text-yellow-700 rounded-full">Pending</span>
           </td>
           <td className="p-3 space-x-1 md:space-x-2">
-            <button className="text-green-600 hover:underline text-xs md:text-sm">Approve</button>
-            <button className="text-red-600 hover:underline text-xs md:text-sm">Reject</button>
+            <button className="text-green-600 hover:underline text-xs md:text-sm" onClick={()=>{handleStatusChange('Approve',list)}}>Approve</button>
+            <button className="text-red-600 hover:underline text-xs md:text-sm" onClick={()=>{handleStatusChange('Reject',list)}}>Reject</button>
             <button className="text-blue-600 hover:underline text-xs md:text-sm" onClick={()=>{
               handleModal(list)
               }}>Edit</button>

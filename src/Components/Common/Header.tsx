@@ -1,10 +1,14 @@
 import React from 'react';
-import DarkMode from './DarkMode'
+import { cookies } from 'next/headers';
 import UserName from './UserName';
 const Header = () => {
   // You can replace this with actual user data later
-  const username = 'Arjun';
-  const avatarUrl = '/user-avatar.png';
+
+    const cookie =  cookies().get('token');
+  const token: string | undefined = cookie?.value;
+  
+
+
 
   return (
     <header className="bg-white dark:bg-gray-900">
@@ -23,8 +27,8 @@ const Header = () => {
           >
             Dark Mode <span aria-hidden="true">→</span>
           </button> */}
-          <UserName/>
-          <DarkMode/>
+          <UserName token={token}/>
+          {/* <DarkMode/> */}
           
         </div>
       </nav>
